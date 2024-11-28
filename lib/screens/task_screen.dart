@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tasky/components/task_list.dart';
 import 'package:tasky/screens/add_task_screen.dart';
-import 'package:tasky/models/task.dart';
-import 'package:provider/provider.dart';
 import 'package:tasky/models/task_data.dart';
 
 class TaskScreen extends StatefulWidget {
