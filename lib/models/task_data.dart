@@ -9,10 +9,6 @@ class TaskData extends ChangeNotifier {
     return UnmodifiableListView(_taskList);
   }
 
-  void printTask() {
-    print(_taskList);
-  }
-
   int getTaskListLength() {
     return _taskList.length;
   }

@@ -5,6 +5,8 @@ import 'package:tasky/components/task_list.dart';
 import 'package:tasky/models/task_data.dart';
 
 class TaskScreen extends StatefulWidget {
+  const TaskScreen({super.key});
+
   @override
   State<TaskScreen> createState() => _TaskScreenState();
 }
@@ -16,15 +18,15 @@ class _TaskScreenState extends State<TaskScreen> {
       floatingActionButton: FloatingActionButton(
         onPressed: () =>
             Provider.of<TaskData>(context, listen: false).addTask(''),
-        backgroundColor: Color(0xFF5DA4A9),
-        foregroundColor: Color(0xFFFFFFFF),
+        backgroundColor: const Color(0xFF5DA4A9),
+        foregroundColor: const Color(0xFFFFFFFF),
         child: const Icon(
           CupertinoIcons.plus,
           color: Color(0xFFFFFFFF),
           size: 30,
         ),
       ),
-      backgroundColor: Color(0xFFEAE6F9),
+      backgroundColor: const Color(0xFFEAE6F9),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -63,7 +65,7 @@ class _TaskScreenState extends State<TaskScreen> {
           ),
           Expanded(
             child: Container(
-              padding: EdgeInsets.only(top: 5),
+              padding: const EdgeInsets.only(top: 5),
               decoration: const BoxDecoration(
                 color: Color(0xFFFFF6EB),
                 borderRadius: BorderRadius.only(

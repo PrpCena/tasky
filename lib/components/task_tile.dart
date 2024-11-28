@@ -3,7 +3,8 @@ import 'package:tasky/models/task.dart';
 
 class TaskTile extends StatefulWidget {
   const TaskTile(
-      {required this.task,
+      {super.key,
+      required this.task,
       required this.toggleCheckBox,
       required this.deleteTask,
       required this.editTitle});
@@ -23,6 +24,7 @@ class _TaskTileState extends State<TaskTile> {
 
   @override
   void initState() {
+    super.initState();
     newTitle = widget.task.taskTitle;
     if (newTitle == '') {
       editMode = true;
@@ -32,7 +34,7 @@ class _TaskTileState extends State<TaskTile> {
   Widget titleMode() {
     return editMode
         ? TextFormField(
-            style: TextStyle(color: Color(0xFF212121)),
+            style: const TextStyle(color: Color(0xFF212121)),
             initialValue: widget.task.taskTitle,
             autofocus: true,
             onChanged: (value) => newTitle = value,
@@ -50,7 +52,7 @@ class _TaskTileState extends State<TaskTile> {
         : Text(
             widget.task.taskTitle,
             style: TextStyle(
-              color: Color(0xFF212121),
+              color: const Color(0xFF212121),
               decoration:
                   widget.task.isTaskDone ? TextDecoration.lineThrough : null,
             ),
@@ -71,7 +73,7 @@ class _TaskTileState extends State<TaskTile> {
               : Checkbox(
                   value: widget.task.isTaskDone,
                   onChanged: widget.toggleCheckBox,
-                  activeColor: Color(0xFF5DA4A9),
+                  activeColor: const Color(0xFF5DA4A9),
                 )),
     );
   }
