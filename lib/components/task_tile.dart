@@ -19,24 +19,38 @@ class TaskTile extends StatefulWidget {
 
 class _TaskTileState extends State<TaskTile> {
   bool editMode = false;
-  String newTitle = 'No title';
+  late String newTitle;
+
+  @override
+  void initState() {
+    newTitle = widget.task.taskTitle;
+    if (newTitle == '') {
+      editMode = true;
+    }
+  }
 
   Widget titleMode() {
     return editMode
         ? TextFormField(
+            style: TextStyle(color: Color(0xFF212121)),
             initialValue: widget.task.taskTitle,
             autofocus: true,
             onChanged: (value) => newTitle = value,
             onTapOutside: (value) {
-              widget.editTitle(newTitle);
-              setState(() {
-                editMode = !editMode;
-              });
+              String title = newTitle.trim();
+
+              if (title != '') {
+                setState(() {
+                  widget.editTitle(title);
+                  editMode = !editMode;
+                });
+              }
             },
           )
         : Text(
             widget.task.taskTitle,
             style: TextStyle(
+              color: Color(0xFF212121),
               decoration:
                   widget.task.isTaskDone ? TextDecoration.lineThrough : null,
             ),
@@ -57,7 +71,7 @@ class _TaskTileState extends State<TaskTile> {
               : Checkbox(
                   value: widget.task.isTaskDone,
                   onChanged: widget.toggleCheckBox,
-                  activeColor: Colors.blueAccent,
+                  activeColor: Color(0xFF5DA4A9),
                 )),
     );
   }

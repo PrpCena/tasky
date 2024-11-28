@@ -1,8 +1,8 @@
 class Task {
-  String _taskTitle;
+  String _taskTitle = 'No Title';
   bool _isTaskDone = false;
 
-  Task({String taskTitle = 'No Title'}) : _taskTitle = taskTitle;
+  Task(String taskTitle) : _taskTitle = taskTitle ?? 'No Title';
 
   String get taskTitle => _taskTitle;
   bool get isTaskDone => _isTaskDone;

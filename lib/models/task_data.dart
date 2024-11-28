@@ -3,13 +3,14 @@ import 'task.dart';
 import 'package:collection/collection.dart';
 
 class TaskData extends ChangeNotifier {
-  List<Task> _taskList = [
-    Task(taskTitle: 'Buy Milk'),
-    Task(taskTitle: 'Buy Fruits')
-  ];
+  List<Task> _taskList = [Task('Buy Milk'), Task('Buy Fruits')];
 
   UnmodifiableListView<Task> get taskList {
     return UnmodifiableListView(_taskList);
+  }
+
+  void printTask() {
+    print(_taskList);
   }
 
   int getTaskListLength() {
@@ -22,7 +23,7 @@ class TaskData extends ChangeNotifier {
   }
 
   void addTask(String taskTitle) {
-    _taskList.add(Task(taskTitle: taskTitle));
+    _taskList.add(Task(taskTitle));
     notifyListeners();
   }
 
