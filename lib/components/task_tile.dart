@@ -52,11 +52,13 @@ class _TaskTileState extends State<TaskTile> {
       }),
       child: ListTile(
           title: titleMode(),
-          trailing: Checkbox(
-            value: widget.task.isTaskDone,
-            onChanged: widget.toggleCheckBox,
-            activeColor: Colors.blueAccent,
-          )),
+          trailing: editMode
+              ? null
+              : Checkbox(
+                  value: widget.task.isTaskDone,
+                  onChanged: widget.toggleCheckBox,
+                  activeColor: Colors.blueAccent,
+                )),
     );
   }
 }
