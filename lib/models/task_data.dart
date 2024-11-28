@@ -16,8 +16,9 @@ class TaskData extends ChangeNotifier {
     return _taskList.length;
   }
 
-  void printTasks() {
-    print(_taskList);
+  void removeTask(int index) {
+    _taskList.removeAt(index);
+    notifyListeners();
   }
 
   void addTask(String taskTitle) {

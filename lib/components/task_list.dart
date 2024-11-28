@@ -13,6 +13,8 @@ class TaskList extends StatelessWidget {
           title: Provider.of<TaskData>(context).taskList[index].taskTitle,
           onChanged: (value) => Provider.of<TaskData>(context, listen: false)
               .changeTaskStatus(index),
+          onLongPress: () =>
+              Provider.of<TaskData>(context, listen: false).removeTask(index),
           isChecked: Provider.of<TaskData>(context).taskList[index].isTaskDone,
         );
       },
