@@ -1,31 +1,62 @@
 import 'package:flutter/material.dart';
+import 'package:tasky/models/task.dart';
 
-class TaskTile extends StatelessWidget {
+class TaskTile extends StatefulWidget {
   const TaskTile(
-      {this.title = 'No Title',
-      this.isChecked = false,
-      required this.onChanged,
-      required this.onLongPress});
+      {required this.task,
+      required this.toggleCheckBox,
+      required this.deleteTask,
+      required this.editTitle});
 
-  final String title;
-  final bool isChecked;
-  final Function(bool?) onChanged;
-  final GestureLongPressCallback onLongPress;
+  final Task task;
+  final Function(bool?) toggleCheckBox;
+  final GestureLongPressCallback deleteTask;
+  final Function(String?) editTitle;
+
+  @override
+  State<TaskTile> createState() => _TaskTileState();
+}
+
+class _TaskTileState extends State<TaskTile> {
+  bool editMode = false;
+  String newTitle = 'No title';
+
+  Widget titleMode() {
+    return editMode
+        ? TextFormField(
+            initialValue: widget.task.taskTitle,
+            autofocus: true,
+            onChanged: (value) => newTitle = value,
+            onTapOutside: (value) {
+              widget.editTitle(newTitle);
+              setState(() {
+                editMode = !editMode;
+              });
+            },
+          )
+        : Text(
+            widget.task.taskTitle,
+            style: TextStyle(
+              decoration:
+                  widget.task.isTaskDone ? TextDecoration.lineThrough : null,
+            ),
+          );
+  }
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-        onLongPress: onLongPress,
-        title: Text(
-          title,
-          style: TextStyle(
-            decoration: isChecked ? TextDecoration.lineThrough : null,
-          ),
-        ),
-        trailing: Checkbox(
-          value: isChecked,
-          onChanged: onChanged,
-          activeColor: Colors.blueAccent,
-        ));
+    return GestureDetector(
+      onLongPress: widget.deleteTask,
+      onDoubleTap: () => setState(() {
+        editMode = !editMode;
+      }),
+      child: ListTile(
+          title: titleMode(),
+          trailing: Checkbox(
+            value: widget.task.isTaskDone,
+            onChanged: widget.toggleCheckBox,
+            activeColor: Colors.blueAccent,
+          )),
+    );
   }
 }
