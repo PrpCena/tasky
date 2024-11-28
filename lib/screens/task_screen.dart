@@ -1,8 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:tasky/components/task_list.dart';
 import 'package:tasky/screens/add_task_screen.dart';
-import 'package:tasky/components/task.dart';
+import 'package:tasky/models/task.dart';
+import 'package:provider/provider.dart';
+import 'package:tasky/models/task_data.dart';
 
 class TaskScreen extends StatefulWidget {
   @override
@@ -10,27 +13,15 @@ class TaskScreen extends StatefulWidget {
 }
 
 class _TaskScreenState extends State<TaskScreen> {
-  List<Task> _taskList = [
-    Task(taskTitle: 'Buy Milk'),
-    Task(taskTitle: 'Buy Fruits')
-  ];
-
-  void addTask(String taskTitle) {
-    setState(() {
-      _taskList.add(Task(taskTitle: taskTitle));
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           showModalBottomSheet(
-              context: context,
-              builder: (context) => AddTask(
-                    onPressed: addTask,
-                  ));
+            context: context,
+            builder: (context) => AddTask(),
+          );
         },
         backgroundColor: Colors.lightBlue,
         foregroundColor: Colors.white,
@@ -47,10 +38,10 @@ class _TaskScreenState extends State<TaskScreen> {
           Container(
             padding:
                 const EdgeInsets.only(left: 60, right: 30, top: 80, bottom: 30),
-            child: const Column(
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                CircleAvatar(
+                const CircleAvatar(
                   radius: 30,
                   backgroundColor: Colors.white,
                   child: Icon(
@@ -59,10 +50,10 @@ class _TaskScreenState extends State<TaskScreen> {
                     size: 40,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
-                Text(
+                const Text(
                   'Tasky',
                   style: TextStyle(
                     color: Colors.white,
@@ -71,8 +62,8 @@ class _TaskScreenState extends State<TaskScreen> {
                   ),
                 ),
                 Text(
-                  '12 Tasks',
-                  style: TextStyle(
+                  '${Provider.of<TaskData>(context).getTaskListLength()} Tasks',
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 18,
                   ),
@@ -89,7 +80,7 @@ class _TaskScreenState extends State<TaskScreen> {
                     topRight: Radius.circular(20),
                     topLeft: Radius.circular(20)),
               ),
-              child: TaskList(taskList: _taskList),
+              child: TaskList(),
             ),
           )
         ],

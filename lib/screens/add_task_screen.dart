@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:tasky/components/task_list.dart';
+import 'package:provider/provider.dart';
+import 'package:tasky/models/task_data.dart';
 
 class AddTask extends StatelessWidget {
-  AddTask({required this.onPressed});
-  final Function(String) onPressed;
-
-  String taskName = '';
+  String taskTitle = '';
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +25,7 @@ class AddTask extends StatelessWidget {
             ),
           ),
           TextField(
-            onChanged: (value) => taskName = value,
+            onChanged: (value) => taskTitle = value,
             autofocus: true,
             textAlign: TextAlign.center,
           ),
@@ -39,7 +37,7 @@ class AddTask extends StatelessWidget {
                   const RoundedRectangleBorder()), // Correct shape
             ),
             onPressed: () {
-              onPressed(taskName);
+              Provider.of<TaskData>(context, listen: false).addTask(taskTitle);
               Navigator.pop(context);
             },
             child: const Text(
