@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:tasky/models/task.dart';
+import 'package:tasky/models/task_data.dart';
 
 class TaskTile extends StatefulWidget {
-  const TaskTile({super.key, required this.task, required this.deleteTask});
+  const TaskTile({super.key, required this.task});
 
   final Task task;
-  final GestureLongPressCallback deleteTask;
 
   @override
   State<TaskTile> createState() => _TaskTileState();
@@ -55,7 +56,8 @@ class _TaskTileState extends State<TaskTile> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onLongPress: widget.deleteTask,
+      onLongPress: () => Provider.of<TaskData>(context, listen: false)
+          .removeTaskByObject(widget.task),
       onDoubleTap: () => setState(() {
         editMode = !editMode;
       }),

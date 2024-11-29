@@ -19,10 +19,7 @@ class TaskList extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10),
               ),
               child: TaskTile(
-                task: Provider.of<TaskData>(context).taskList[index],
-                deleteTask: () => Provider.of<TaskData>(context, listen: false)
-                    .removeTask(index),
-              ),
+                  task: Provider.of<TaskData>(context).taskList[index]),
             );
           },
         ),
