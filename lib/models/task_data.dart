@@ -22,9 +22,4 @@ class TaskData extends ChangeNotifier {
     _taskList.add(Task(taskTitle));
     notifyListeners();
   }
-
-  void changeTaskStatus(int index) {
-    _taskList[index].changeTaskStatus();
-    notifyListeners();
-  }
 }

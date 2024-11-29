@@ -2,17 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:tasky/models/task.dart';
 
 class TaskTile extends StatefulWidget {
-  const TaskTile(
-      {super.key,
-      required this.task,
-      required this.toggleCheckBox,
-      required this.deleteTask,
-      required this.editTitle});
+  const TaskTile({super.key, required this.task, required this.deleteTask});
 
   final Task task;
-  final Function(bool?) toggleCheckBox;
   final GestureLongPressCallback deleteTask;
-  final Function(String?) editTitle;
 
   @override
   State<TaskTile> createState() => _TaskTileState();
@@ -25,7 +18,7 @@ class _TaskTileState extends State<TaskTile> {
   @override
   void initState() {
     super.initState();
-    newTitle = widget.task.taskTitle;
+    newTitle = widget.task.taskTitle ?? '';
     if (newTitle == '') {
       editMode = true;
     }
@@ -43,14 +36,14 @@ class _TaskTileState extends State<TaskTile> {
 
               if (title != '') {
                 setState(() {
-                  widget.editTitle(title);
+                  widget.task.setTaskTitle(title);
                   editMode = !editMode;
                 });
               }
             },
           )
         : Text(
-            widget.task.taskTitle,
+            widget.task.taskTitle ?? '',
             style: TextStyle(
               color: const Color(0xFF212121),
               decoration:
@@ -72,7 +65,9 @@ class _TaskTileState extends State<TaskTile> {
               ? null
               : Checkbox(
                   value: widget.task.isTaskDone,
-                  onChanged: widget.toggleCheckBox,
+                  onChanged: (value) => setState(() {
+                    widget.task.changeTaskStatus();
+                  }),
                   activeColor: const Color(0xFF5DA4A9),
                 )),
     );
