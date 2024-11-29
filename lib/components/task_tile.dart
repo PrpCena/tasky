@@ -34,13 +34,15 @@ class _TaskTileState extends State<TaskTile> {
             onChanged: (value) => newTitle = value,
             onTapOutside: (value) {
               String title = newTitle.trim();
-
-              if (title != '') {
-                setState(() {
+              setState(() {
+                if (title != '') {
                   widget.task.setTaskTitle(title);
-                  editMode = !editMode;
-                });
-              }
+                } else if (widget.task.taskTitle == '') {
+                  Provider.of<TaskData>(context, listen: false)
+                      .removeTaskByObject(widget.task);
+                }
+                editMode = !editMode;
+              });
             },
           )
         : Text(
@@ -56,22 +58,16 @@ class _TaskTileState extends State<TaskTile> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onLongPress: () => Provider.of<TaskData>(context, listen: false)
-          .removeTaskByObject(widget.task),
-      onDoubleTap: () => setState(() {
-        editMode = !editMode;
-      }),
-      child: ListTile(
+        onLongPress: () => Provider.of<TaskData>(context, listen: false)
+            .removeTaskByObject(widget.task),
+        onDoubleTap: () => setState(() {
+              editMode = !editMode;
+            }),
+        onTap: () => setState(() {
+              widget.task.changeTaskStatus();
+            }),
+        child: ListTile(
           title: titleMode(),
-          trailing: editMode
-              ? null
-              : Checkbox(
-                  value: widget.task.isTaskDone,
-                  onChanged: (value) => setState(() {
-                    widget.task.changeTaskStatus();
-                  }),
-                  activeColor: const Color(0xFF5DA4A9),
-                )),
-    );
+        ));
   }
 }

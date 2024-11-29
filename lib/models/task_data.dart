@@ -19,6 +19,7 @@ class TaskData extends ChangeNotifier {
   }
 
   void removeTaskByObject(Task task) {
+    print('Remove for ${task.taskTitle}');
     _taskList.remove(task);
     notifyListeners();
   }
