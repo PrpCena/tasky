@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tasky/components/task_list.dart';
 import 'package:tasky/models/task_data.dart';
+import 'package:tasky/themes/colors.dart';
 
 class TaskScreen extends StatefulWidget {
   const TaskScreen({super.key});
@@ -18,15 +19,15 @@ class _TaskScreenState extends State<TaskScreen> {
       floatingActionButton: FloatingActionButton(
         onPressed: () =>
             Provider.of<TaskData>(context, listen: false).addTask(''),
-        backgroundColor: const Color(0xFF5DA4A9),
-        foregroundColor: const Color(0xFFFFFFFF),
+        backgroundColor: AppColors.primary,
+        foregroundColor: AppColors.iconForeground,
         child: const Icon(
           CupertinoIcons.plus,
-          color: Color(0xFFFFFFFF),
+          color: AppColors.iconForeground,
           size: 30,
         ),
       ),
-      backgroundColor: const Color(0xFFEAE6F9),
+      backgroundColor: AppColors.accent,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -38,17 +39,17 @@ class _TaskScreenState extends State<TaskScreen> {
               children: [
                 const CircleAvatar(
                   radius: 30,
-                  backgroundColor: Color(0xFF5DA4A9),
+                  backgroundColor: AppColors.circleAvatarBackground,
                   child: Icon(
                     Icons.list,
-                    color: Color(0xFFEAE6F9),
+                    color: AppColors.iconBackground,
                     size: 40,
                   ),
                 ),
                 const Text(
                   'Tasky',
                   style: TextStyle(
-                    color: Color(0xFF2D2A32),
+                    color: AppColors.headerText,
                     fontSize: 50,
                     fontWeight: FontWeight.bold,
                   ),
@@ -56,7 +57,7 @@ class _TaskScreenState extends State<TaskScreen> {
                 Text(
                   '${Provider.of<TaskData>(context).getTaskListLength()} Tasks',
                   style: const TextStyle(
-                    color: Color(0xFF747474),
+                    color: AppColors.taskCountText,
                     fontSize: 18,
                   ),
                 )
@@ -67,14 +68,15 @@ class _TaskScreenState extends State<TaskScreen> {
             child: Container(
               padding: const EdgeInsets.only(top: 5),
               decoration: const BoxDecoration(
-                color: Color(0xFFFFF6EB),
+                color: AppColors.secondaryBackground,
                 borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(20),
-                    topLeft: Radius.circular(20)),
+                  topRight: Radius.circular(20),
+                  topLeft: Radius.circular(20),
+                ),
               ),
               child: TaskList(),
             ),
-          )
+          ),
         ],
       ),
     );

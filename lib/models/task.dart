@@ -1,5 +1,5 @@
 class Task {
-  String? _taskTitle;
+  String _taskTitle;
   bool _isTaskDone = false;
 
   Task(String taskTitle) : _taskTitle = taskTitle;
@@ -7,7 +7,7 @@ class Task {
   String? get taskTitle => _taskTitle;
   bool get isTaskDone => _isTaskDone;
 
-  void setTaskTitle(String? taskTitle) {
+  void setTaskTitle(String taskTitle) {
     _taskTitle = taskTitle;
   }
 
