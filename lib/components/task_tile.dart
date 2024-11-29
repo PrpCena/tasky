@@ -3,6 +3,7 @@ import 'package:tasky/themes/colors.dart';
 import 'package:provider/provider.dart';
 import 'package:tasky/models/task.dart';
 import 'package:tasky/models/task_data.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 
 class TaskTile extends StatefulWidget {
   const TaskTile({super.key, required this.task});
@@ -61,16 +62,27 @@ class _TaskTileState extends State<TaskTile> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onLongPress: () => Provider.of<TaskData>(context, listen: false)
-          .removeTaskByObject(widget.task),
       onDoubleTap: () => setState(() {
         editMode = !editMode;
       }),
       onTap: () => setState(() {
         widget.task.changeTaskStatus();
       }),
-      child: ListTile(
-        title: titleMode(),
+      child: Slidable(
+        endActionPane: ActionPane(motion: StretchMotion(), children: [
+          SlidableAction(
+            onPressed: (context) =>
+                Provider.of<TaskData>(context, listen: false)
+                    .removeTaskByObject(widget.task),
+            backgroundColor: AppColors.background,
+            foregroundColor: AppColors.circleAvatarBackground,
+            icon: Icons.delete,
+            label: 'Delete',
+          )
+        ]),
+        child: ListTile(
+          title: titleMode(),
+        ),
       ),
     );
   }
