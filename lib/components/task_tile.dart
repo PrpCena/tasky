@@ -39,7 +39,7 @@ class _TaskTileState extends State<TaskTile> {
               setState(() {
                 if (title.isNotEmpty) {
                   widget.task.setTaskTitle(title);
-                } else {
+                } else if (widget.task.taskTitle!.trim().isEmpty) {
                   Provider.of<TaskData>(context, listen: false)
                       .removeTaskByObject(widget.task);
                 }

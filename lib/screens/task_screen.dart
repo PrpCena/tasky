@@ -13,12 +13,26 @@ class TaskScreen extends StatefulWidget {
 }
 
 class _TaskScreenState extends State<TaskScreen> {
+  bool isButtonDisabled = false;
+
+  void _handleTask() {
+    if (isButtonDisabled) return;
+
+    isButtonDisabled = true;
+    Provider.of<TaskData>(context, listen: false).addTask('');
+
+    Future.delayed(const Duration(milliseconds: 300), () {
+      setState(() {
+        isButtonDisabled = false;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: () =>
-            Provider.of<TaskData>(context, listen: false).addTask(''),
+        onPressed: () => _handleTask(),
         backgroundColor: AppColors.primary,
         foregroundColor: AppColors.iconForeground,
         child: const Icon(
