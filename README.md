@@ -15,9 +15,9 @@ Tasky is a simple, intuitive, and visually appealing task management app. It all
 
 Here are some screenshots of the app:
 
-![Simulator Screenshot - iPhone Xʀ - 2024-12-01 at 14 44 51](https://github.com/user-attachments/assets/dd8ccb92-77d4-43aa-b0b4-8a0a9336e066)
+<img src="https://github.com/user-attachments/assets/dd8ccb92-77d4-43aa-b0b4-8a0a9336e066" alt="Simulator Screenshot 1" width="300">
 
-![Simulator Screenshot - iPhone Xʀ - 2024-12-01 at 14 44 48](https://github.com/user-attachments/assets/c2ef0e9a-747d-48c8-874b-3f6bbd63638d)
+<img src="https://github.com/user-attachments/assets/c2ef0e9a-747d-48c8-874b-3f6bbd63638d" alt="Simulator Screenshot 2" width="300">
 
 ## 🛠 Tech Stack
 
