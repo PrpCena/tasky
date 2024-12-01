@@ -15,18 +15,15 @@ Tasky is a simple, intuitive, and visually appealing task management app. It all
 
 Here are some screenshots of the app:
 
-| Home Screen | Adding Tasks | Task Management |
-|-------------|--------------|-----------------|
-| ![Home Screen](./screenshots/screenshot1.png) | ![Adding Tasks](./screenshots/screenshot2.png) | ![Task Management](./screenshots/screenshot3.png) |
+/Users/prpcena/Desktop/Simulator Screenshot - iPhone Xʀ - 2024-12-01 at 14.44.43.png
 
-
+/Users/prpcena/Desktop/Simulator Screenshot - iPhone Xʀ - 2024-12-01 at 14.44.51.png
 ## 🛠 Tech Stack
 
 - **Flutter**: For building the UI and app logic.
 - **Provider**: State management to handle task-related operations efficiently.
 - **Material & Cupertino**: Widgets for cross-platform compatibility.
-- **Flutter Slidable**: For implem![Simulator Screenshot - iPhone Xʀ - 2024-12-01 at 14 44 40](https://github.com/user-attachments/assets/f3827fe1-3ff0-44c7-a321-c3dcdb755494)
-enting swipe-to-delete functionality.
+- **Flutter Slidable**: For implementing swipe-to-delete functionality.
 
 ## 📋 Installation
 
