@@ -19,6 +19,7 @@ class _TaskTileState extends State<TaskTile> {
 
   @override
   void initState() {
+    super.initState();
     newTitle = widget.task.taskTitle;
     editMode = newTitle.isEmpty ? true : false;
   }
