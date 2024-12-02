@@ -1,38 +1,29 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tasky/components/task_list.dart';
-import 'package:tasky/models/task_data.dart';
+import 'package:tasky/cubit/task_cubit.dart';
 import 'package:tasky/themes/colors.dart';
+import '../models/task.dart';
 
-class TaskScreen extends StatefulWidget {
-  const TaskScreen({super.key});
-
-  @override
-  State<TaskScreen> createState() => _TaskScreenState();
-}
-
-class _TaskScreenState extends State<TaskScreen> {
-  bool isButtonDisabled = false;
-
-  void _handleTask() {
-    if (isButtonDisabled) return;
-
-    isButtonDisabled = true;
-    Provider.of<TaskData>(context, listen: false).addTask('');
-
-    Future.delayed(const Duration(milliseconds: 300), () {
-      setState(() {
-        isButtonDisabled = false;
-      });
-    });
-  }
-
+class TaskScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    bool isButtonDisabled = false;
+
+    void handleTask() {
+      if (isButtonDisabled) return;
+
+      isButtonDisabled = true;
+      BlocProvider.of<TaskCubit>(context).addTask('');
+      Future.delayed(const Duration(milliseconds: 300), () {
+        isButtonDisabled = false;
+      });
+    }
+
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: () => _handleTask(),
+        onPressed: () => handleTask(),
         backgroundColor: AppColors.primary,
         foregroundColor: AppColors.iconForeground,
         child: const Icon(
@@ -68,11 +59,13 @@ class _TaskScreenState extends State<TaskScreen> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                Text(
-                  '${Provider.of<TaskData>(context).getTaskListLength()} Tasks',
-                  style: const TextStyle(
-                    color: AppColors.taskCountText,
-                    fontSize: 18,
+                BlocBuilder<TaskCubit, List<Task>>(
+                  builder: (context, taskList) => Text(
+                    '${taskList.length} Tasks',
+                    style: const TextStyle(
+                      color: AppColors.taskCountText,
+                      fontSize: 18,
+                    ),
                   ),
                 )
               ],

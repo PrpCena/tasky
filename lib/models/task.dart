@@ -1,17 +1,13 @@
 class Task {
-  String _taskTitle;
-  bool _isTaskDone = false;
+  final String taskTitle;
+  final bool isTaskDone;
 
-  Task(String taskTitle) : _taskTitle = taskTitle;
+  const Task(this.taskTitle, {this.isTaskDone = false});
 
-  String? get taskTitle => _taskTitle;
-  bool get isTaskDone => _isTaskDone;
-
-  void setTaskTitle(String taskTitle) {
-    _taskTitle = taskTitle;
-  }
-
-  void changeTaskStatus() {
-    _isTaskDone = !_isTaskDone;
+  Task copyWith({String? taskTitle, bool? isTaskDone}) {
+    return Task(
+      taskTitle ?? this.taskTitle,
+      isTaskDone: isTaskDone ?? this.isTaskDone,
+    );
   }
 }
