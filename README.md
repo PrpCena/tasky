@@ -74,7 +74,3 @@ class AppColors {
 
 Contributions, issues, and feature requests are welcome!  
 Feel free to check the [issues page](https://github.com/PrpCena/tasky) or create a pull request.
-
----
-
-Let me know if you’d like to tweak or add anything! 😊
