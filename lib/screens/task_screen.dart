@@ -7,6 +7,7 @@ import 'package:tasky/themes/colors.dart';
 import '../models/task.dart';
 
 class TaskScreen extends StatelessWidget {
+  static const String id = 'task_screen';
   @override
   Widget build(BuildContext context) {
     bool isButtonDisabled = false;
