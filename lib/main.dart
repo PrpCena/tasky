@@ -1,26 +1,12 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tasky/cubit/task_cubit.dart';
-import 'package:tasky/screens/login_screen.dart';
-import 'package:tasky/screens/signup_screen.dart';
-import 'screens/task_screen.dart';
+import 'package:user_repository/user_repository.dart';
+import 'my_app.dart';
 
-void main() => runApp(MyApp());
-
-class MyApp extends StatelessWidget {
-  static const taskScreen = '/task_screen';
-  @override
-  Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => TaskCubit(),
-      child: MaterialApp(
-        routes: {
-          TaskScreen.id: (context) => TaskScreen(),
-          LoginScreen.id: (context) => LoginScreen(),
-          SignUpScreen.id: (context) => SignUpScreen()
-        },
-        home: LoginScreen(),
-      ),
-    );
-  }
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(MyApp(
+    userRepository: FirebaseUserRepo(),
+  ));
 }
