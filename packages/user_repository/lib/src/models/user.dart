@@ -14,5 +14,6 @@ class MyUser {
   static MyUser fromEntity(MyUserEntity entity) =>
       MyUser(uid: entity.uid, name: entity.name, email: entity.email);
 
+  @override
   String toString() => 'MyUser: $name, $email, $uid';
 }
