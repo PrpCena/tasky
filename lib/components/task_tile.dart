@@ -50,9 +50,15 @@ class _TaskTileState extends State<TaskTile> {
                   style: const TextStyle(color: AppColors.taskText),
                   initialValue: widget.task.taskTitle,
                   autofocus: true,
-                  onChanged: (value) => newTitle = value,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(borderSide: BorderSide.none),
+                    contentPadding: EdgeInsets.zero,
+                  ),
+                  maxLines: null,
+                  keyboardType: TextInputType.multiline,
+                  onChanged: (value) =>
+                      newTitle = value.replaceAll(RegExp(r'\s+'), ' ').trim(),
                   onTapOutside: (value) => setState(() {
-                    newTitle = newTitle.trim();
                     if (newTitle.isNotEmpty &&
                         newTitle != widget.task.taskTitle) {
                       context.read<TaskBloc>().add(TaskUpdateTitle(
