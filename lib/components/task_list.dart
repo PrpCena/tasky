@@ -28,12 +28,6 @@ class TaskList extends StatelessWidget {
         }
       },
       builder: (context, state) {
-        if (state is TaskListUpdating) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        }
-
         if (state is TaskListLoaded) {
           return ListView.builder(
             itemCount: state.taskList.length,
@@ -55,7 +49,6 @@ class TaskList extends StatelessWidget {
             },
           );
         }
-
         return const Center(
           child: Text('No tasks found'),
         );

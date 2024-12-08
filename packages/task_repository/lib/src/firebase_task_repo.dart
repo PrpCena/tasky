@@ -10,8 +10,12 @@ class FirebaseTaskRepo implements TaskRepository {
   FirebaseTaskRepo({required this.uid});
 
   @override
-  Stream<List<Task>?> get tasks =>
-      tasksCollection.doc(uid).collection('tasks').snapshots().map((snapshot) {
+  Stream<List<Task>?> get tasks => tasksCollection
+          .doc(uid)
+          .collection('tasks')
+          .orderBy('time', descending: false)
+          .snapshots()
+          .map((snapshot) {
         return snapshot.docs.map((doc) {
           return Task.fromEntity(TaskEntity.fromDocument(doc.data()));
         }).toList();
@@ -22,8 +26,11 @@ class FirebaseTaskRepo implements TaskRepository {
     try {
       final docRef = tasksCollection.doc(uid).collection('tasks').doc();
       final docId = docRef.id;
-      await docRef.set(
-          Task(taskId: docId, taskTitle: taskTitle).toEntity().toDocument());
+      await docRef.set(Task(
+        taskId: docId,
+        taskTitle: taskTitle,
+        time: Timestamp.now(),
+      ).toEntity().toDocument());
     } catch (e) {
       log(e.toString());
       rethrow;
@@ -34,10 +41,7 @@ class FirebaseTaskRepo implements TaskRepository {
   Future<void> updateTaskTitle(Task task, String taskTitle) async {
     try {
       final doc = tasksCollection.doc(uid).collection('tasks').doc(task.taskId);
-      await doc.set(task
-          .copyWith(taskTitle: taskTitle, taskId: task.taskId)
-          .toEntity()
-          .toDocument());
+      await doc.update({'taskTitle': taskTitle});
     } catch (e) {
       log(e.toString());
       rethrow;
