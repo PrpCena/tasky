@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:task_repository/task_repository.dart';
+import 'package:tasky/bloc/task_bloc/task_bloc.dart';
 import 'package:tasky/themes/colors.dart';
-import 'package:tasky/models/task.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import '../cubit/task_cubit.dart';
 
 class TaskTile extends StatefulWidget {
   const TaskTile({super.key, required this.task});
@@ -20,7 +20,7 @@ class _TaskTileState extends State<TaskTile> {
   @override
   void initState() {
     super.initState();
-    newTitle = widget.task.taskTitle;
+    newTitle = widget.task.taskTitle.trim();
     editMode = newTitle.isEmpty ? true : false;
   }
 
@@ -30,15 +30,14 @@ class _TaskTileState extends State<TaskTile> {
       onDoubleTap: () => setState(() {
         editMode = !editMode;
       }),
-      onTap: () => BlocProvider.of<TaskCubit>(context).updateTask(
-        widget.task,
-        widget.task.copyWith(isTaskDone: !widget.task.isTaskDone),
-      ),
+      onTap: () =>
+          context.read<TaskBloc>().add(TaskToggleStatus(task: widget.task)),
       child: Slidable(
         endActionPane: ActionPane(motion: const StretchMotion(), children: [
           SlidableAction(
-            onPressed: (context) => BlocProvider.of<TaskCubit>(context)
-                .removeTaskByObject(widget.task),
+            onPressed: (context) => context
+                .read<TaskBloc>()
+                .add(TaskRemove(taskId: widget.task.taskId)),
             backgroundColor: AppColors.background,
             foregroundColor: AppColors.circleAvatarBackground,
             icon: Icons.delete,
@@ -53,13 +52,15 @@ class _TaskTileState extends State<TaskTile> {
                   autofocus: true,
                   onChanged: (value) => newTitle = value,
                   onTapOutside: (value) => setState(() {
-                    if (newTitle.isNotEmpty) {
-                      BlocProvider.of<TaskCubit>(context).updateTask(
-                          widget.task,
-                          widget.task.copyWith(taskTitle: newTitle));
+                    newTitle = newTitle.trim();
+                    if (newTitle.isNotEmpty &&
+                        newTitle != widget.task.taskTitle) {
+                      context.read<TaskBloc>().add(TaskUpdateTitle(
+                          newTaskTitle: newTitle, task: widget.task));
                     } else if (widget.task.taskTitle.trim().isEmpty) {
-                      BlocProvider.of<TaskCubit>(context)
-                          .removeTaskByObject(widget.task);
+                      context
+                          .read<TaskBloc>()
+                          .add(TaskRemove(taskId: widget.task.taskId));
                     }
                     editMode = !editMode;
                   }),
@@ -67,10 +68,10 @@ class _TaskTileState extends State<TaskTile> {
               : Text(
                   widget.task.taskTitle,
                   style: TextStyle(
-                    color: widget.task.isTaskDone
+                    color: widget.task.taskStatus
                         ? AppColors.completedTaskText
                         : AppColors.taskText,
-                    decoration: widget.task.isTaskDone
+                    decoration: widget.task.taskStatus
                         ? TextDecoration.lineThrough
                         : null,
                   ),

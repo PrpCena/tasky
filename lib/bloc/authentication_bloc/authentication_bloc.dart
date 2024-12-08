@@ -21,8 +21,13 @@ class AuthenticationBloc
       if (event.user != MyUser.empty) {
         emit(Authenticated(event.user));
       } else {
-        emit(const Unauthenticated());
+        emit(Unauthenticated());
       }
+    });
+
+    on<AuthenticationUserLogout>((event, emit) {
+      userRepository.logOut();
+      emit(Unauthenticated());
     });
   }
 

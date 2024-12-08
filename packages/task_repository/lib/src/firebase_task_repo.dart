@@ -1,6 +1,6 @@
 import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../user_repository.dart';
+import '../task_repository.dart';
 
 class FirebaseTaskRepo implements TaskRepository {
   @override
@@ -18,11 +18,12 @@ class FirebaseTaskRepo implements TaskRepository {
       });
 
   @override
-  Future<void> addTask(Task task) async {
+  Future<void> addTask(String taskTitle) async {
     try {
       final docRef = tasksCollection.doc(uid).collection('tasks').doc();
       final docId = docRef.id;
-      await docRef.set(task.copyWith(taskId: docId).toEntity().toDocument());
+      await docRef.set(
+          Task(taskId: docId, taskTitle: taskTitle).toEntity().toDocument());
     } catch (e) {
       log(e.toString());
       rethrow;
@@ -30,12 +31,13 @@ class FirebaseTaskRepo implements TaskRepository {
   }
 
   @override
-  Future<void> editTaskTitle(Task task, String taskTitle) async {
+  Future<void> updateTaskTitle(Task task, String taskTitle) async {
     try {
-      final doc =
-          await tasksCollection.doc(uid).collection('tasks').doc(task.taskId);
-      await doc
-          .set(task.copyWith(taskTitle: taskTitle).toEntity().toDocument());
+      final doc = tasksCollection.doc(uid).collection('tasks').doc(task.taskId);
+      await doc.set(task
+          .copyWith(taskTitle: taskTitle, taskId: task.taskId)
+          .toEntity()
+          .toDocument());
     } catch (e) {
       log(e.toString());
       rethrow;
@@ -43,10 +45,9 @@ class FirebaseTaskRepo implements TaskRepository {
   }
 
   @override
-  Future<void> removeTask(Task task) async {
+  Future<void> removeTask(String taskId) async {
     try {
-      final doc =
-          await tasksCollection.doc(uid).collection('tasks').doc(task.taskId);
+      final doc = tasksCollection.doc(uid).collection('tasks').doc(taskId);
       await doc.delete();
     } catch (e) {
       log(e.toString());
@@ -57,8 +58,7 @@ class FirebaseTaskRepo implements TaskRepository {
   @override
   Future<void> toggleTaskStatus(Task task) async {
     try {
-      final doc =
-          await tasksCollection.doc(uid).collection('tasks').doc(task.taskId);
+      final doc = tasksCollection.doc(uid).collection('tasks').doc(task.taskId);
       await doc.update({'taskStatus': !task.taskStatus});
     } catch (e) {
       log(e.toString());

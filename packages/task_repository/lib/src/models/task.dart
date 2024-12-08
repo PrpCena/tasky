@@ -5,8 +5,7 @@ class Task {
   String taskTitle;
   bool taskStatus;
 
-  Task(
-      {required this.taskId, required this.taskTitle, this.taskStatus = false});
+  Task({this.taskId = '', required this.taskTitle, this.taskStatus = false});
 
   static Task empty = Task(taskId: '', taskTitle: '');
 

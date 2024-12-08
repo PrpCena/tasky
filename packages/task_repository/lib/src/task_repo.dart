@@ -1,4 +1,4 @@
-import '../user_repository.dart';
+import '../task_repository.dart';
 
 abstract class TaskRepository {
   String uid;
@@ -7,11 +7,11 @@ abstract class TaskRepository {
 
   Stream<List<Task>?> get tasks;
 
-  Future<void> addTask(Task task);
+  Future<void> addTask(String taskTitle);
 
-  Future<void> removeTask(Task task);
+  Future<void> removeTask(String taskId);
 
-  Future<void> editTaskTitle(Task task, String taskTitle);
+  Future<void> updateTaskTitle(Task task, String taskTitle);
 
   Future<void> toggleTaskStatus(Task task);
 }
